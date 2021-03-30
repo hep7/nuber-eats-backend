@@ -1,0 +1,107 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type NuberUser {
+  id: Float!
+  createAt: DateTime!
+  updateAt: DateTime!
+  email: String!
+  password: String!
+  role: UserRole!
+  verified: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum UserRole {
+  Client
+  Owner
+  Delivery
+}
+
+type Restaurant {
+  id: Float!
+  name: String!
+  isVegan: Boolean!
+  address: String!
+  ownersName: String!
+  categoryName: String!
+}
+
+type CreateAccountRes {
+  result: String
+}
+
+type LoginRes {
+  result: String
+  token: String
+}
+
+type UserProfileRes {
+  result: String
+  user: NuberUser
+}
+
+type UpdateUserProfileRes {
+  result: String
+}
+
+type VerifyEmailRes {
+  result: String
+}
+
+type Query {
+  restaurants: [Restaurant!]!
+  me: NuberUser!
+  userProfile(userId: Float!): UserProfileRes!
+}
+
+type Mutation {
+  createRestaurant(input: CreateRestaurantDto!): Boolean!
+  updateRestaurant(input: UpdateRestaurantDto!): Boolean!
+  createAccount(input: CreateAccountReq!): CreateAccountRes!
+  login(input: LoginReq!): LoginRes!
+  updateUserProfile(input: UpdateUserProfileReq!): UpdateUserProfileRes!
+  verifyEmail(input: VerifyEmailReq!): VerifyEmailRes!
+}
+
+input CreateRestaurantDto {
+  name: String!
+  isVegan: Boolean = true
+  address: String = "강남"
+  ownersName: String!
+  categoryName: String!
+}
+
+input UpdateRestaurantDto {
+  name: String
+  isVegan: Boolean = true
+  address: String = "강남"
+  ownersName: String
+  categoryName: String
+  id: Float!
+}
+
+input CreateAccountReq {
+  email: String!
+  password: String!
+  role: UserRole!
+}
+
+input LoginReq {
+  email: String!
+  password: String!
+}
+
+input UpdateUserProfileReq {
+  email: String
+  password: String
+}
+
+input VerifyEmailReq {
+  code: String!
+}
